@@ -1,0 +1,11 @@
+.ProductDescription {
+    text-align: right;
+    padding-left: 50%;
+}
+
+@media (min-width: 992px) {
+    .ProductDescriptionImage {
+        width: 20%;
+        display: inline-block;
+    }
+}
