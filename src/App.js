@@ -1,27 +1,31 @@
 import { Component } from 'react';
 import ProductData from './model/ProductData';
-import ProductDescription from './ProductDescription';
+import ProductDetails from './ProductDetails/ProductDetails';
 import classes from './App.module.css'
+import ProductPreview from './ProductPreview/ProductPreview';
+import Topbar from './Topbar/Topbar'
 
 class App extends Component {
 
   state = {
-    colorOption: ProductData.colorOptions[0],
-    feature: ProductData.featureList[0]
+    productData: ProductData,
+    currentPreviewImagePos: 0,
+    currentPreviewFeaturePos: 0
   }
 
   setColor = (position) => {
-    const updatedColor = ProductData.colorOptions[position];
-    this.setState({ colorOption: updatedColor });
+    this.setState({ currentPreviewImagePos: position });
   };
 
   setFeature = (position) => {
-    const updatedFeature = ProductData.featureList[position];
+    const updatedFeature = this.state.productData.featureList[position];
     this.setState({ feature: updatedFeature });
+    this.setState({currentPreviewFeaturePos: position});
   };
 
   getFeatureSpec = () => {
-    if (this.state.feature === 'Time') {
+    const feature = this.state.productData.featureList[this.state.currentPreviewFeaturePos]
+    if (feature === 'Time') {
       let today = new Date();
       let hours = today.getHours() > 9 ? today.getHours() : '0' + today.getHours();
       let minutes = today.getMinutes() > 9 ? today.getMinutes() : '0' + today.getMinutes();
@@ -34,7 +38,7 @@ class App extends Component {
     } else {
       return (
         <div className={classes.HeartBeatSection}>
-          <i class="fas fa-heartbeat"></i>
+          <i className="fas fa-heartbeat"></i>
           <p>78</p>
         </div>
       );
@@ -44,24 +48,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <nav className={classes.Topbar}>
-            <img src="https://i.dlpng.com/static/png/197684_preview.png" alt="Amazon Logo" />
-          </nav>
-        </header>
+        <Topbar />
         <div className={classes.MainContainer}>
           <div className={classes.ProductPreview}>
-            <img src={this.state.colorOption.imageUrl} alt="Product Preview" />
-            <div className={classes.FeatureData}>
-              {this.getFeatureSpec()}
-            </div>
+            <ProductPreview data={this.state.productData} currentPreviewImagePos={this.state.currentPreviewImagePos} getFeatureSpec={this.getFeatureSpec} />
           </div>
           <div className={classes.ProductData}>
-            <ProductDescription title={ProductData.title}
-              description={ProductData.description} colors={ProductData.colorOptions}
-              features={ProductData.featureList} onImgColorClick={this.setColor} onFeatureBtnClick={this.setFeature}
+            <ProductDetails data={this.state.productData} currentPreviewImagePos={this.state.currentPreviewImagePos} 
+              currentPreviewFeaturePos={this.state.currentPreviewFeaturePos} onImgColorClick={this.setColor} onFeatureBtnClick={this.setFeature}
             />
-            <button className={classes.PrimaryButton}>Buy Now</button>
           </div>
         </div>
       </div>

@@ -1,0 +1,27 @@
+.ProductPreview {
+    width: 100%;
+    position: relative;
+}
+
+.ProductPreview > img {
+    width: 100%;
+}
+
+.FeatureItem {
+    min-width: 80px;
+    background-color: gainsboro;
+    border-radius: 8px;
+    border: 0;
+    text-align: center;
+    margin-right: 12px;
+    cursor: pointer;
+    box-sizing: content-box;
+
+    padding: 12px 24px;
+    font-weight: 600;
+}
+
+.SelectedFeatureItem {
+    color: white;
+    background-color: grey;
+}
