@@ -1,4 +1,4 @@
-import classes from './ProductDescription.module.css';
+import classes from './App.module.css';
 
 const ProductDescription = (props) => {
     // console.log(props);
@@ -11,19 +11,20 @@ const ProductDescription = (props) => {
         props.onFeatureBtnClick(pos);
     }
 
-    const colors = props.colors.map((item, position) => <img onClick={() => onImgColorClick(position)} className={classes.ProductDescriptionImage} src={item.imageUrl} key={position} />);
+    const colors = props.colors.map((item, position) => <img className={classes.ProductImage} onClick={() => onImgColorClick(position)} src={item.imageUrl} key={position}  alt={item.styleName} />);
 
-    const features = props.features.map((item, position) => <button onClick={() => onFeatureBtnClick(position)} key={position}>{item}</button>)
+    const features = props.features.map((item, position) => <button className={classes.FeatureItem} onClick={() => onFeatureBtnClick(position)} key={position}>{item}</button>)
 
     return (
-        <div className={classes.ProductDescription}>
-            <h2>{props.title}</h2>
-            <p>{props.description}</p>
-            <p>Select Color:</p>
+        <div>
+            <h1 className={classes.ProductTitle}>{props.title}</h1>
+            <p className={classes.ProductDescription}>{props.description}</p>
+            <h3 className={classes.SectionHeading}>Select Color</h3>
             <br/>
             <div>
                 {colors}
             </div>
+            <h3 className={classes.SectionHeading}>Features</h3>
             <div>
                 {features}
             </div>

@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import './App.css';
 import ProductData from './model/ProductData';
 import ProductDescription from './ProductDescription';
+import classes from './App.module.css'
 
 class App extends Component {
 
@@ -23,28 +23,45 @@ class App extends Component {
   getFeatureSpec = () => {
     if (this.state.feature === 'Time') {
       let today = new Date();
-      let time = today.getHours() + ":" + today.getMinutes();
-      return time;
+      let hours = today.getHours() > 9 ? today.getHours() : '0' + today.getHours();
+      let minutes = today.getMinutes() > 9 ? today.getMinutes() : '0' + today.getMinutes();
+      let time = hours + ":" + minutes;
+      return (
+        <div className={classes.TimeSection}>
+          <p>{time}</p>
+        </div>
+      );
     } else {
-      return 71;
+      return (
+        <div className={classes.HeartBeatSection}>
+          <i class="fas fa-heartbeat"></i>
+          <p>78</p>
+        </div>
+      );
     }
   };
 
   render() {
     return (
       <div className="App">
-        <div className="split right">
-          <div className="centeredText">
-            <ProductDescription title={ProductData.title} 
-            description={ProductData.description} colors={ProductData.colorOptions} 
-            features={ProductData.featureList} onImgColorClick={this.setColor} onFeatureBtnClick={this.setFeature} 
-            />
+        <header className="App-header">
+          <nav className={classes.Topbar}>
+            <img src="https://i.dlpng.com/static/png/197684_preview.png" alt="Amazon Logo" />
+          </nav>
+        </header>
+        <div className={classes.MainContainer}>
+          <div className={classes.ProductPreview}>
+            <img src={this.state.colorOption.imageUrl} alt="Product Preview" />
+            <div className={classes.FeatureData}>
+              {this.getFeatureSpec()}
+            </div>
           </div>
-        </div>
-        <div className="split left">
-          <div className="centered">
-            <img src={this.state.colorOption.imageUrl} />
-            <p>{this.getFeatureSpec()}</p>
+          <div className={classes.ProductData}>
+            <ProductDescription title={ProductData.title}
+              description={ProductData.description} colors={ProductData.colorOptions}
+              features={ProductData.featureList} onImgColorClick={this.setColor} onFeatureBtnClick={this.setFeature}
+            />
+            <button className={classes.PrimaryButton}>Buy Now</button>
           </div>
         </div>
       </div>
